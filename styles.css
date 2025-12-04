@@ -101,6 +101,11 @@ form {
   padding: 1rem;
 }
 
+.competitions-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .inputs-wrapper,
 .outputs-wrapper {
   display: flex;

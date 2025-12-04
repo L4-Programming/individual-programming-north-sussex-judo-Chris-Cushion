@@ -15,69 +15,101 @@
         <h2>Cost Calculator</h2>
         <hr />
 
-        <div class="inputs-wrapper">
-          <label for="athlete-name">Athlete Name</label>
-          <input type="text" id="athlete-name" name="athlete-name" required />
+        <div class="training-plan-wrapper" role="radiogroup">
+          <label>Training Plan</label>
+          <div class="radio-button-field">
+            <input
+              type="radio"
+              id="beginner"
+              name="training-plan"
+              value="beginner"
+              required
+              checked
+            />
+            <label for="beginner">Beginner - 2 sessions p/wk</label>
+          </div>
 
-          <div class="training-plan-wrapper" role="radiogroup">
-            <label>Training Plan</label>
+          <div class="radio-button-field">
+            <input
+              type="radio"
+              id="intermediate"
+              name="training-plan"
+              value="intermediate"
+              required
+            />
+            <label for="intermediate">Intermediate - 3 sessions p/wk</label>
+          </div>
+
+          <div class="radio-button-field">
+            <input
+              type="radio"
+              id="elite"
+              name="training-plan"
+              value="elite"
+              required
+            />
+            <label for="elite">Elite - 5 sessions p/wk</label>
+          </div>
+        </div>
+
+        <div>
+          <label for="current-weight">Current Weight (kg)</label>
+          <input type="number" id="current-weight" name="current-weight" />
+        </div>
+
+        <div>
+          <label>Enter Monthly Competition</label>
+          <div class="competitions-wrapper">
             <div class="radio-button-field">
               <input
                 type="radio"
-                name="training-plan"
-                value="beginner"
-                required
+                id="competitions-yes"
+                name="competitions-entered"
+                value="yes"
+              />
+              <label for="competitions-yes">Yes</label>
+            </div>
+            <div class="radio-button-field">
+              <input
+                type="radio"
+                id="competitions-no"
+                name="competitions-entered"
+                value="no"
                 checked
               />
-              <label for="beginner">Beginner - 2 sessions p/wk</label>
-            </div>
-
-            <div class="radio-button-field">
-              <input
-                type="radio"
-                name="training-plan"
-                value="intermediate"
-                required
-              />
-              <label for="intermediate">Intermediate - 3 sessions p/wk</label>
-            </div>
-
-            <div class="radio-button-field">
-              <input type="radio" name="training-plan" value="elite" required />
-              <label for="elite">Elite - 5 sessions p/wk</label>
+              <label for="competitions-no">No</label>
             </div>
           </div>
 
-          <div>
-            <label for="current-weight">Current Weight (kg)</label>
-            <input type="number" id="current-weight" name="current-weight" />
+          <div id="competitions-count-wrapper" style="display: none">
+            <label for="competitions-count">How many?</label>
+            <input
+              type="number"
+              id="competitions-count"
+              name="competitions-count"
+              min="0"
+            />
           </div>
+        </div>
+        <div>
+          <label for="private-coaching-hours"
+            >Number of Hours of Private Coaching (Optional)</label
+          >
+          <input type="number" name="private-coaching-hours" />
+        </div>
 
-          <div>
-            <label for="competitions-entered"
-              >Number of Competitions Entered this Month (Optional)</label
-            >
-            <input type="number" name="competitions-entered" />
-          </div>
-
-          <div>
-            <label for="private-coaching-hours"
-              >Number of Hours of Private Coaching (Optional)</label
-            >
-            <input type="number" name="private-coaching-hours" />
-          </div>
-
-          <div>
-            <button type="submit" id="submit-button">Submit</button>
-          </div>
+        <div>
+          <button type="submit" id="submit-button">Submit</button>
         </div>
       </form>
 
-      <div class="athlete-info">
+      <script type="module" src="./index.js"></script>
+
+      <div class="athlete-info" id="athlete-info">
         <h2>Athlete Information</h2>
         <hr />
 
-        <div class="outputs-wrapper">
+        <div class="outputs-wrapper" id="outputs-wrapper">
           <div id="output" class="output-field">Awaiting Input...</div>
         </div>
       </div>
