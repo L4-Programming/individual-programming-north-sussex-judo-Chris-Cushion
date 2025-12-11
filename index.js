@@ -137,6 +137,13 @@ if (form) {
       )}`;
 
       output.textContent = message;
+
+      const nameRegex = /^[A-Za-z]+ [A-Za-z]+$/;
+      if (nameRegex.test(document.querySelector("#athlete-name").value)) {
+        // valid
+      } else {
+        // invalid
+      }
     }
   });
 }
