@@ -41,28 +41,37 @@ if (form) {
 
     const competitionsFinal = competitionsAllowed ? enteredCompetition : 0;
 
-
-    // Determine weight category (uses weightClass function below)
+       // Determine weight category (uses weightClass function below)
     const weightCategory = isNaN(weight) ? "Unknown" : weightClass(weight);
 
-    // Collect validation errors
-    const errors = [];
-    if (!name) errors.push("Name is required.");
-    // Validate name format: require at least two name parts (first and last), allow letters, hyphens and apostrophes
-    const nameRegex = /^[A-Za-z'’-]+(?: [A-Za-z'’-]+)+$/;
-    if (name && !nameRegex.test(name))
-      errors.push("Name must include at least a first and last name (letters, hyphens or apostrophes allowed).");
-    if (isNaN(weight) || weight < 30 || weight > 300)
-      errors.push("Weight must be a number between 30 and 300 kg.");
-    if (!level) errors.push("Select a training level.");
-    if (!competitionsAllowed && enteredCompetition === 1)
-      errors.push("Beginners cannot enter competitions.");
-    if (
-      !privateHoursValid &&
-      privateHoursRaw !== undefined &&
-      privateHoursRaw !== ""
-    )
-      errors.push("Private hours must be between 0 and 5.");
+    function weightClass(w) {
+  if (w >= 30 && w <= 66) return "Flyweight";
+  if (w >= 67 && w <= 73) return "Lightweight";
+  if (w >= 74 && w <= 81) return "Light Middleweight";
+  if (w >= 82 && w <= 90) return "Middleweight";
+  if (w >= 91 && w <= 100) return "Light Heavyweight";
+  if (w >= 101 && w <= 300) return "Heavyweight";
+  return "Unknown";
+}
+
+// Collect validation errors
+const errors = [];
+if (!name) errors.push("Name is required.");
+// Validate name format: require at least two name parts (first and last), allow letters, hyphens and apostrophes
+const nameRegex = /^[A-Za-z'’-]+(?: [A-Za-z'’-]+)+$/;
+if (name && !nameRegex.test(name))
+errors.push("Name must include at least a first and last name (letters, hyphens or apostrophes allowed).");
+if (isNaN(weight) || weight < 30 || weight > 300)
+errors.push("Weight must be a number between 30 and 300 kg.");
+if (!level) errors.push("Select a training level.");
+if (!competitionsAllowed && enteredCompetition === 1)
+errors.push("Beginners cannot enter competitions.");
+if (
+!privateHoursValid &&
+privateHoursRaw !== undefined &&
+privateHoursRaw !== ""
+)
+errors.push("Private hours must be between 0 and 5.");
 
     // If there are validation errors, show them and stop — do not capture/display user inputs
     if (errors.length) {
