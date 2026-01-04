@@ -99,12 +99,14 @@
         </div>
         <div>
           <label for="private-coaching-hours"
-            >Number of Hours of Private Coaching (Optional)</label
+            >Number of Hours of Private Coaching (Optional — max 5 per booking)</label
           >
           <input
             type="number"
             id="private-coaching-hours"
             name="private-coaching-hours"
+            min="0"
+            max="5"
           />
           <div id="privatecoaching-error"></div>
         </div>

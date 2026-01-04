@@ -123,8 +123,9 @@ form {
 .athlete-info {
   display: flex;
   flex-direction: column;
-  flex: 1 0 auto;
-  padding: 1rem;
+  flex: 0 0 440px; /* slightly larger column */
+  max-width: 460px;
+  padding: 1.25rem;
 }
 
 .competitions-wrapper {
@@ -163,7 +164,9 @@ form {
 
 .wrapper {
   display: flex;
-  max-width: 100%;
+  align-items: flex-start;
+  gap: 2rem;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 32px 32px;
 }

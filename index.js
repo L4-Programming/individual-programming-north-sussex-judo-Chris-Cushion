@@ -26,9 +26,9 @@ if (form) {
         ? parseInt(privateHoursRaw, 10)
         : NaN;
 
-    // validation for private hours (0-20)
+    // validation for private hours (0-5 per submission)
     const privateHoursValid =
-      !isNaN(privateHours) && privateHours >= 0 && privateHours <= 20;
+      !isNaN(privateHours) && privateHours >= 0 && privateHours <= 5;
 
     // Competitions (binary: 0 or 1)
     const competitionsSelected =
@@ -57,6 +57,10 @@ if (form) {
     // Collect validation errors
     const errors = [];
     if (!name) errors.push("Name is required.");
+    // Validate name format: require at least two name parts (first and last), allow letters, hyphens and apostrophes
+    const nameRegex = /^[A-Za-z'’-]+(?: [A-Za-z'’-]+)+$/;
+    if (name && !nameRegex.test(name))
+      errors.push("Name must include at least a first and last name (letters, hyphens or apostrophes allowed).");
     if (isNaN(weight) || weight < 30 || weight > 300)
       errors.push("Weight must be a number between 30 and 300 kg.");
     if (!level) errors.push("Select a training level.");
@@ -68,7 +72,7 @@ if (form) {
       privateHoursRaw !== undefined &&
       privateHoursRaw !== ""
     )
-      errors.push("Private hours must be between 0 and 20.");
+      errors.push("Private hours must be between 0 and 5.");
 
     // If there are validation errors, show them and stop — do not capture/display user inputs
     if (errors.length) {
@@ -112,7 +116,7 @@ if (form) {
           ? `${privateHours} hrs`
           : isNaN(privateHours)
           ? "N/A"
-          : "Invalid (0-20)"
+          : "Invalid (0-5)"
         : "N/A (not available to Beginners)";
 
       const compText = competitionsFinal === 1 ? "Yes (1)" : "No (0)";
@@ -122,28 +126,36 @@ if (form) {
         privateAllowed && privateHoursValid
           ? `£${privateCost.toFixed(2)}`
           : privateAllowed && !isNaN(privateHours)
-          ? "Invalid (0-20)"
+          ? "Invalid (0-5)"
           : "£0.00";
 
       const competitionCostText =
         competitionsFinal === 1 ? `£${competitionCost.toFixed(2)}` : "£0.00";
 
-      let message = `Name: ${name || "N/A"} | Weight: ${
-        isNaN(weight) ? "N/A" : weight + " kg"
-      } | Weight Category: ${weightCategory} | Level: ${
-        level || "N/A"
-      } | Entered Competition: ${compText} (Cost: ${competitionCostText}) | Private: ${privateText} (Cost: ${privateCostText}) | Monthly Cost: £${totalMonthly.toFixed(
-        2
-      )}`;
+      // Display each piece of information on its own line
+      const lines = [
+        `Name: ${name || "N/A"}`,
+        `Weight: ${isNaN(weight) ? "N/A" : weight + " kg"}`,
+        `Weight Category: ${weightCategory}`,
+        `Level: ${level || "N/A"}`,
+        `Entered Competition: ${compText} (Cost: ${competitionCostText})`,
+        `Private: ${privateText} (Cost: ${privateCostText})`,
+        `Monthly Cost: £${totalMonthly.toFixed(2)}`,
+      ];
 
-      output.textContent = message;
-
-      const nameRegex = /^[A-Za-z]+ [A-Za-z]+$/;
-      if (nameRegex.test(document.querySelector("#athlete-name").value)) {
-        // valid
-      } else {
-        // invalid
+      const outputsWrapperEl = document.getElementById("outputs-wrapper");
+      if (outputsWrapperEl) {
+        // Clear previous outputs then append each line as its own output-field
+        outputsWrapperEl.innerHTML = "";
+        lines.forEach((line) => {
+          const div = document.createElement("div");
+          div.className = "output-field";
+          div.textContent = line;
+          outputsWrapperEl.appendChild(div);
+        });
       }
+
+      // Name format validated earlier; no DOM check required here.
     }
   });
 }
@@ -153,7 +165,7 @@ if (form) {
 // Check if the user has clicked a level
 // Check if the user has added a valid weight (30-300)
 // Check if the user has entered a valid number of competitions (0-1) - Make competitions a binary button
-// Check if the user has entered a valid number of private coaching hours (0-20)
+// Check if the user has entered a valid number of private coaching hours (0-5)
 // Only Intermediate and Elite can enter competitions
 // A month always consists of 4 weeks
 
