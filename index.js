@@ -41,8 +41,6 @@ if (form) {
 
     const competitionsFinal = competitionsAllowed ? enteredCompetition : 0;
 
-    // Validate competitions: must be 0 or 1
-    const competitionsValid = competitionsFinal === 0 || competitionsFinal === 1;
 
     // Determine weight category (uses weightClass function below)
     const weightCategory = isNaN(weight) ? "Unknown" : weightClass(weight);
@@ -59,7 +57,6 @@ if (form) {
     if (!level) errors.push("Select a training level.");
     if (!competitionsAllowed && enteredCompetition === 1)
       errors.push("Beginners cannot enter competitions.");
-    if (!competitionsValid) errors.push("Competitions must be 0 or 1.");
     if (
       !privateHoursValid &&
       privateHoursRaw !== undefined &&
@@ -97,7 +94,9 @@ if (form) {
 
     const weeklyCost = WEEKLY_COSTS[level] ?? 0;
     const monthlyBase = weeklyCost * 4; // 4 weeks per month
-    const privateAllowed = level === "intermediate" || level === "elite";
+    // Private coaching allowed for all levels (including Beginners)
+    const privateAllowed =
+      level === "beginner" || level === "intermediate" || level === "elite";
     const privateCost =
       privateAllowed && !isNaN(privateHours) ? privateHours * PRIVATE_RATE : 0;
     const competitionCost = competitionsFinal === 1 ? COMPETITION_FEE : 0;
@@ -110,7 +109,7 @@ if (form) {
           : isNaN(privateHours)
           ? "N/A"
           : "Invalid (0-5)"
-        : "N/A (not available to Beginners)";
+        : "N/A";
 
       const compText = competitionsFinal === 1 ? "One" : "Zero";
 
@@ -166,7 +165,7 @@ if (form) {
 // Beginner - £25.00 weekly
 // Intermediate - £30.00 weekly
 // Elite - £35.00 weekly
-// Private tuition £9.50 per hour - exclusive to intermediate and elite
+// Private tuition £9.50 per hour - available to all levels
 // Competition entry fee - £22.00 - only one per month
 
 // Calculate the weight category, convert into integer
