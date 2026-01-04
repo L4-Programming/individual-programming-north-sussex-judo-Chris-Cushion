@@ -33,14 +33,8 @@ if (form) {
     // Competitions (binary: 0 or 1)
     const competitionsSelected =
       document.querySelector('input[name="competitions-entered"]:checked')
-        ?.value ||
-      (document.getElementById("competitions-yes")?.checked
-        ? "yes"
-        : document.getElementById("competitions-no")?.checked
-        ? "no"
-        : "");
-
-    let enteredCompetition = competitionsSelected === "yes" ? 1 : 0;
+        ?.value ?? "0";
+    const enteredCompetition = Number(competitionsSelected) === 1 ? 1 : 0;
 
     // Only Intermediate and Elite can enter competitions
     const competitionsAllowed = level === "intermediate" || level === "elite";
@@ -48,8 +42,7 @@ if (form) {
     const competitionsFinal = competitionsAllowed ? enteredCompetition : 0;
 
     // Validate competitions: must be 0 or 1
-    const competitionsValid =
-      competitionsFinal === 0 || competitionsFinal === 1;
+    const competitionsValid = competitionsFinal === 0 || competitionsFinal === 1;
 
     // Determine weight category (uses weightClass function below)
     const weightCategory = isNaN(weight) ? "Unknown" : weightClass(weight);
@@ -119,7 +112,7 @@ if (form) {
           : "Invalid (0-5)"
         : "N/A (not available to Beginners)";
 
-      const compText = competitionsFinal === 1 ? "Yes (1)" : "No (0)";
+      const compText = competitionsFinal === 1 ? "One" : "Zero";
 
       // New: show separate private & competition cost lines
       const privateCostText =
@@ -140,7 +133,7 @@ if (form) {
         `Level: ${level || "N/A"}`,
         `Entered Competition: ${compText} (Cost: ${competitionCostText})`,
         `Private: ${privateText} (Cost: ${privateCostText})`,
-        `Monthly Cost: £${totalMonthly.toFixed(2)}`,
+        `Total Cost: £${totalMonthly.toFixed(2)}`,
       ];
 
       const outputsWrapperEl = document.getElementById("outputs-wrapper");
