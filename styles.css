@@ -11,6 +11,8 @@
   --slate-500: #64748b;
   --slate-300: #cbd5e1;
   --white: #ffffff;
+  --error-bkg: rgb(255, 241, 241);
+  --error-placeholder: rgb(255, 157, 157);
 }
 
 /*
@@ -85,6 +87,30 @@ h6 {
   overflow-wrap: break-word;
 }
 
+.error-input {
+  background-color: var(--error-bkg);
+  color: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
+.error-input::placeholder {
+  color: var(--error-placeholder);
+}
+.error-label {
+  color: var(--brand-dark);
+}
+
+.error-message ul {
+  padding-left: 0;
+}
+.error-message ul li {
+  color: var(--brand-dark);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1px;
+  list-style: none;
+  margin-bottom: 0.5rem;
+}
+
 /* Layout ------------------- */
 
 form {
@@ -97,8 +123,14 @@ form {
 .athlete-info {
   display: flex;
   flex-direction: column;
-  flex: 1 0 auto;
-  padding: 1rem;
+  flex: 0 0 440px; /* slightly larger column */
+  max-width: 460px;
+  padding: 1.25rem;
+}
+
+.competitions-wrapper {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .inputs-wrapper,
@@ -132,7 +164,9 @@ form {
 
 .wrapper {
   display: flex;
-  max-width: 100%;
+  align-items: flex-start;
+  gap: 2rem;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 32px 32px;
 }
