@@ -184,15 +184,7 @@ errors.push("Private hours must be between 0 and 5.");
 // middleweight 82-90
 // light heavyweight 91-100
 // heavyweight 101-300
-function weightClass(w) {
-  if (w >= 30 && w <= 66) return "Flyweight";
-  if (w >= 67 && w <= 73) return "Lightweight";
-  if (w >= 74 && w <= 81) return "Light Middleweight";
-  if (w >= 82 && w <= 90) return "Middleweight";
-  if (w >= 91 && w <= 100) return "Light Heavyweight";
-  if (w >= 101 && w <= 300) return "Heavyweight";
-  return "Unknown";
-}
+
 
 // Display the total cost to the user
 // Userlevelcost + competition + (privatecoaching * userhours)
