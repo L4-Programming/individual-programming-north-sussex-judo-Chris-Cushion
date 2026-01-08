@@ -57,7 +57,7 @@ if (form) {
 // Collect validation errors
 const errors = [];
 if (!name) errors.push("Name is required.");
-// Validate name format: require at least two name parts (first and last), allow letters, hyphens and apostrophes
+// Validate name is actually a full name
 const nameRegex = /^[A-Za-z'’-]+(?: [A-Za-z'’-]+)+$/;
 if (name && !nameRegex.test(name))
 errors.push("Name must include at least a first and last name (letters, hyphens or apostrophes allowed).");
@@ -73,11 +73,11 @@ privateHoursRaw !== ""
 )
 errors.push("Private hours must be between 0 and 5.");
 
-    // If there are validation errors, show them and stop — do not capture/display user inputs
+    // For validation errors return error message 
     if (errors.length) {
       if (output) {
         output.textContent = "Errors: " + errors.join(" ");
-        output.classList.add("error"); // optional: style via CSS
+        output.classList.add("error"); 
       }
       console.error("Form validation failed:", errors);
       return;
